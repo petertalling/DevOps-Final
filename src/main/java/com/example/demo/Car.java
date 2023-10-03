@@ -36,8 +36,8 @@ public class Car {
         System.out.println("Honk, honk!");
     }
 
-    public String sayWroomWroom(){
-        return "Wroom, Wroom!";
+    public String sayBrumBrum(){
+        return "Brumm, Brum!";
     }
 
 }
