@@ -32,4 +32,8 @@ public class Car {
         return engine;
     }
 
+    public String honkHorn(){
+        return "Honk, honk!";
+    }
+
 }
