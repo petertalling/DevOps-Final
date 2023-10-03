@@ -32,4 +32,8 @@ public class Car {
         return engine;
     }
 
+    public void honkHorn(){
+        System.out.println("Honk, honk!");
+    }
+
 }
