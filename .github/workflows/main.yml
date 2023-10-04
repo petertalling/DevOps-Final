@@ -45,7 +45,7 @@ jobs:
           name: app-jar
           path: build/libs/final-0.0.1-SNAPSHOT.jar
 
-  publish:
+  build and publish image:
     needs: building
     permissions: write-all
     runs-on: ubuntu-latest
@@ -99,8 +99,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
         ports:
-          - 80:80
-        options: --health-cmd="curl -f http://localhost:80:80" --health-interval=10s --health-timeout=5s --health-retries=3
+          - 8080:80
+        options: --health-cmd="curl -f http://localhost:8080" --health-interval=10s --health-timeout=5s --health-retries=3
 
         
   deploy:
