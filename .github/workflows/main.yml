@@ -45,7 +45,7 @@ jobs:
           name: app-jar
           path: build/libs/final-0.0.1-SNAPSHOT.jar
 
-  build and publish image:
+  publish:
     needs: building
     permissions: write-all
     runs-on: ubuntu-latest
@@ -78,7 +78,7 @@ jobs:
           docker push ghcr.io/${{ env.REPO_NAME }}:development-latest
           
   system-testing:
-    needs: build and publish image
+    needs: publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
