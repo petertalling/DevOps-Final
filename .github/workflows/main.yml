@@ -80,7 +80,7 @@ jobs:
   system-testing:
     needs: publish
     runs-on: ubuntu-latest
-      services:
+    services:
         app:
             image: ghcr.io/${{ env.REPO_NAME }}:development-latest
             credentials:
