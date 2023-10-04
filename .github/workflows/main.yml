@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   testing:
@@ -75,7 +76,25 @@ jobs:
       - name: Push Docker image
         run: |
           docker push ghcr.io/${{ env.REPO_NAME }}:development-latest
-
+          
+  system-testing:
+    needs: publish
+    runs-on: ubuntu-latest
+      services:
+        app:
+            image: ghcr.io/${{ env.REPO_NAME }}:development-latest
+            credentials:
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+            ports:
+                - 80:80
+            options: --health-cmd="curl -f http://localhost:80:80" --health-interval=10s --health-timeout=5s --health-retries=3
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v3
+          - name: Run system-testing
+            run: ./gradlew systemTest
+        
   deploy:
     needs: publish
     runs-on: ubuntu-latest

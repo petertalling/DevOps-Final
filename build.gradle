@@ -41,7 +41,12 @@ sourceSets {
 		resources.srcDir file('src/integrationTest/resources')
 		compileClasspath += sourceSets.main.output + sourceSets.test.output
 		runtimeClasspath += sourceSets.main.output + sourceSets.test.output
-	}}
+	}
+	systemTest{
+		java.srcDir file('src/systemTest/java')
+		resources.srcDir file('src/systemTest/resources')
+	}
+}
 
 configurations {
 	integrationTestImplementation.extendsFrom testImplementation
@@ -60,6 +65,18 @@ task integrationTest(type: Test) {
         events "passed", "skipped", "failed"
     }
     finalizedBy jacocoTestReport
+}
+
+task systemTest(type: Test) {
+	testClassesDirs = sourceSets.systemTest.output.classesDirs
+	classpath = sourceSets.systemTest.runtimeClasspath
+	useJUnitPlatform {
+		failFast = true
+	}
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+	finalizedBy jacocoTestReport
 }
 
 
