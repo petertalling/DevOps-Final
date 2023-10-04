@@ -78,7 +78,7 @@ jobs:
           docker push ghcr.io/${{ env.REPO_NAME }}:development-latest
           
   system-testing:
-    needs: publish
+    needs: build and publish image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
