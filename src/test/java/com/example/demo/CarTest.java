@@ -104,4 +104,9 @@ public class CarTest {
         assertFalse(car.getLight().getFrontLightStatus());
         assertFalse(car.getLight().getBackLightStatus());
     }
+
+    @Test
+    void CarTest_sayBrumBrum(){
+        assertEquals(car.sayBrumBrum(), "Wroom");
+    }
 }
