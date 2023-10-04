@@ -78,22 +78,22 @@ jobs:
           docker push ghcr.io/${{ env.REPO_NAME }}:development-latest
           
   system-testing:
-  needs: publish
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Run system-testing
-      run: ./gradlew systemTest
-  services:
-    app:
-      image: ghcr.io/petertalling/devops-final:development-latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-      ports:
-        - 80:80
-      options: --health-cmd="curl -f http://localhost:80" --health-interval=10s --health-timeout=5s --health-retries=3
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run system-testing
+        run: ./gradlew systemTest
+    services:
+      app:
+        image: ghcr.io/petertalling/devops-final:development-latest
+        credentials:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        ports:
+          - 80:80
+        options: --health-cmd="curl -f http://localhost:80" --health-interval=10s --health-timeout=5s --health-retries=3
 
         
   deploy:
