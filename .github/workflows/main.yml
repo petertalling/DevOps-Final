@@ -131,13 +131,13 @@ jobs:
         run: echo "Deploying TEST ghcr.io/${{ env.REPO_NAME }}:development-latest"
 
   deploy-prod:
-    if: github.event_name == 'pull_request' && github.head_ref == 'main'
     needs: deploy-test
+    if: github.event_name == 'pull_request' && github.head_ref == 'main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Convert repository name to lowercase
         run: echo "REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-      - name: Deploy Fake
+      - name: Deploy Prod
         run: echo "Deploying PROD ghcr.io/${{ env.REPO_NAME }}:development-latest"
