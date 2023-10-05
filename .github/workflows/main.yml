@@ -1,8 +1,12 @@
 name: Java Gradle Testing and building
 
 on:
-  push: "branch-**"
-  pull_request: "main"
+  push:
+    branches:
+      - "branch-**"
+      - "main"
+  pull_request:
+      branches: "main"
 
 permissions:
   contents: read
