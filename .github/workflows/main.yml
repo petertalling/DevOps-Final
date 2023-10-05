@@ -131,7 +131,6 @@ jobs:
         run: echo "Deploying TEST ghcr.io/${{ env.REPO_NAME }}:development-latest"
 
   deploy-prod:
-    needs: deploy-test
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
     runs-on: ubuntu-latest
     steps:
