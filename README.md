@@ -1,8 +1,6 @@
 # DevOps-Final
 
-To run checkstyle use: ./gradlew checkstyleMain/Test/IntegrationTest
-Reports: \build\checkstyle
-
-To run test coverage with Jacoco use: ./gradlew jacocoTestReport
-Reports: build\reports\jacoco\test\html
+To run checkstyle and test coverage use: ./gradlew test
+Reports checkstyle: \build\checkstyle
+Reports test coverage: \build\jacocoHtml
 

@@ -1,61 +1,61 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.1.4'
-	id 'io.spring.dependency-management' version '1.1.3'
-	id 'jacoco'
-	id 'checkstyle'
+    id 'java'
+    id 'org.springframework.boot' version '3.1.4'
+    id 'io.spring.dependency-management' version '1.1.3'
+    id 'jacoco'
+    id 'checkstyle'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.rest-assured:rest-assured:5.3.2'
-	testImplementation 'junit:junit:4.13.1'
-	testImplementation 'org.testng:testng:7.1.0'
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.rest-assured:rest-assured:5.3.2'
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'org.testng:testng:7.1.0'
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 test {
-	useJUnitPlatform{
-		failFast = true
-	}
-	testLogging {
-		events "passed", "skipped", "failed"
-	}
-	finalizedBy jacocoTestReport
-	finalizedBy checkstyleMain
-	finalizedBy checkstyleTest
+    useJUnitPlatform {
+        failFast = true
+    }
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+    finalizedBy jacocoTestReport
+    finalizedBy checkstyleMain
+    finalizedBy checkstyleTest
 }
 
 sourceSets {
-	integrationTest {
-		java.srcDir file('src/integrationTest/java')
-		resources.srcDir file('src/integrationTest/resources')
-		compileClasspath += sourceSets.main.output + sourceSets.test.output
-		runtimeClasspath += sourceSets.main.output + sourceSets.test.output
-	}
-	systemTest{
-		java.srcDir file('src/systemTest/java')
-		resources.srcDir file('src/systemTest/resources')
-	}
+    integrationTest {
+        java.srcDir file('src/integrationTest/java')
+        resources.srcDir file('src/integrationTest/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+    systemTest {
+        java.srcDir file('src/systemTest/java')
+        resources.srcDir file('src/systemTest/resources')
+    }
 }
 
 configurations {
-	integrationTestImplementation.extendsFrom testImplementation
-	integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-	systemTestImplementation.extendsFrom testImplementation
-	systemTestRuntimeOnly.extendsFrom testRuntimeOnly
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    systemTestImplementation.extendsFrom testImplementation
+    systemTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 task integrationTest(type: Test) {
@@ -67,33 +67,39 @@ task integrationTest(type: Test) {
     testLogging {
         events "passed", "skipped", "failed"
     }
-	finalizedBy checkstyleIntegrationTest
+    finalizedBy checkstyleIntegrationTest
 }
 
 task systemTest(type: Test) {
-	testClassesDirs = sourceSets.systemTest.output.classesDirs
-	classpath = sourceSets.systemTest.runtimeClasspath
-	useJUnitPlatform {
-		failFast = true
-	}
-	testLogging {
-		events "passed", "skipped", "failed"
-	}
-	finalizedBy checkstyleSystemTest
+    testClassesDirs = sourceSets.systemTest.output.classesDirs
+    classpath = sourceSets.systemTest.runtimeClasspath
+    useJUnitPlatform {
+        failFast = true
+    }
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+    finalizedBy checkstyleSystemTest
 }
 
 tasks.withType(Checkstyle) {
-	reports {
-		xml.required = false
-		html.required = true
-	}
+    reports {
+        xml.required = false
+        html.required = true
+    }
 }
 
 checkstyle {
-	configFile = file("${project.rootDir}/config/checkstyle/google_checks.xml")
-	toolVersion = '10.12.4'
-	reportsDir = file("${project.buildDir}/checkstyle")
-	showViolations = true
+    configFile = file("${project.rootDir}/config/checkstyle/google_checks.xml")
+    toolVersion = '10.12.4'
+    reportsDir = file("${project.buildDir}/checkstyle")
+    showViolations = true
 }
 
-//jacocoTestReport { dependsOn test reports { xml.required = true } }
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        html.required = true
+    }
+}
