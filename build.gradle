@@ -67,9 +67,7 @@ task integrationTest(type: Test) {
     testLogging {
         events "passed", "skipped", "failed"
     }
-    finalizedBy jacocoTestReport
 	finalizedBy checkstyleIntegrationTest
-
 }
 
 task systemTest(type: Test) {
@@ -81,9 +79,7 @@ task systemTest(type: Test) {
 	testLogging {
 		events "passed", "skipped", "failed"
 	}
-	finalizedBy jacocoTestReport
 	finalizedBy checkstyleSystemTest
-
 }
 
 tasks.withType(Checkstyle) {
@@ -100,4 +96,4 @@ checkstyle {
 	showViolations = true
 }
 
-jacocoTestReport { dependsOn test reports { xml.required = true } }
+//jacocoTestReport { dependsOn test reports { xml.required = true } }
